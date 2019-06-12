@@ -9,7 +9,6 @@ RUN rm -rf /tmp/src/.git* && \
     chgrp -R 0 /tmp/src && \
     chmod -R g+w /tmp/src && \
     rm -rf /tmp/scripts && \
-    mv /tmp/src/.s2i/bin /tmp/scripts
 
 ENV XDG_CACHE_HOME=/opt/app-root/src/.cache
 
