@@ -1,5 +1,18 @@
 FROM rocker/r-ver:3.6.0
 
+USER root
+
+COPY . /tmp/src
+
+RUN rm -rf /tmp/src/.git* && \
+    chown -R 1001 /tmp/src && \
+    chgrp -R 0 /tmp/src && \
+    chmod -R g+w /tmp/src && \
+    rm -rf /tmp/scripts && \
+    mv /tmp/src/.s2i/bin /tmp/scripts
+
+ENV XDG_CACHE_HOME=/opt/app-root/src/.cache
+
 ARG RSTUDIO_VERSION
 #ENV RSTUDIO_VERSION=${RSTUDIO_VERSION:-1.2.1335}
 ARG S6_VERSION
@@ -101,5 +114,7 @@ EXPOSE 8787
 
 ## automatically link a shared volume for kitematic users
 VOLUME /home/rstudio/kitematic
+
+USER 1001
 
 CMD ["/init"]
